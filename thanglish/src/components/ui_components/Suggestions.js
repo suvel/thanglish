@@ -2,7 +2,7 @@ import React from "react";
 import Pill from "./Pill";
 
 const RenderPillsList = ({ stringArray }) => {
-  return stringArray.map((str) => <Pill>{str}</Pill>);
+  return stringArray.map((str, index) => <Pill key={index}>{str}</Pill>);
 };
 
 const Suggestions = ({ words }) => {
