@@ -6,3 +6,17 @@ th,
 td {
   padding: 10px;
 }
+
+.fb-id {
+  max-width: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.table-container {
+  max-height: 70vh;
+  overflow-y: scroll;
+  width: fit-content;
+}

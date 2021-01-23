@@ -1,4 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  createRef,
+  useRef,
+} from "react";
 import { StorageContext } from "./firebase";
 import { LoadingContext } from "../context/LoadingProvider";
 import { fetchCrtSpelling, addToCrtSpelling } from "../collection/crtSpelling";
@@ -7,12 +13,15 @@ const WordManager = () => {
   const [word, setWord] = useState("");
   const { crtSpellings, setCrtSpellings } = useContext(StorageContext);
   const { setLoading } = useContext(LoadingContext);
-
+  const addBtnRef = createRef(null);
+  const tableContainerRef = useRef(null);
   const getRows = () => {
     if (!(crtSpellings?.length > 0)) return [];
     return crtSpellings.map((spl, index) => (
       <React.Fragment key={index}>
-        <td>{spl.id}</td>
+        <td>
+          <span className="fb-id">{spl.id}</span>
+        </td>
         <td>{spl.wrd}</td>
       </React.Fragment>
     ));
@@ -22,9 +31,7 @@ const WordManager = () => {
     setLoading(true);
     await fetchCrtSpelling()
       .then((querySnapshot) => {
-        debugger;
         querySnapshot.forEach((doc) => {
-          // console.log(`${doc.id} => ${doc.data()}`);
           spellings.push({ id: doc.id, ...doc.data() });
         });
         setLoading(false);
@@ -40,10 +47,11 @@ const WordManager = () => {
     await addToCrtSpelling(word)
       .then(function (docRef) {
         setLoading(false);
-        console.log("Document written with ID: ", docRef.id);
         let clonedCrtSpelling = [...crtSpellings];
-        clonedCrtSpelling.push({ id: docRef.id, wrd: word });
+        clonedCrtSpelling.unshift({ id: docRef.id, wrd: word });
         setCrtSpellings(clonedCrtSpelling);
+        setWord("");
+        tableContainerRef.current.scrollTo(0, 0);
       })
       .catch(function (error) {
         setLoading(false);
@@ -51,13 +59,15 @@ const WordManager = () => {
       });
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      addBtnRef.current.click();
+    }
+  };
+
   useEffect(() => {
     fetchWords();
   }, []);
-
-  useEffect(() => {
-    console.log({ crtSpellings });
-  }, [crtSpellings]);
 
   return (
     <div>
@@ -66,10 +76,13 @@ const WordManager = () => {
           type="text"
           value={word}
           onChange={(eve) => setWord(eve.target.value)}
+          onKeyPress={handleKeyPress}
         />
-        <button onClick={addWord2DB}>ADD</button>
+        <button ref={addBtnRef} onClick={addWord2DB}>
+          ADD
+        </button>
       </div>
-      <div>
+      <div ref={tableContainerRef} class="table-container">
         <table>
           <TableHeaders cols={["ID", "WORDS"]} />
           <TableRows rows={getRows()} rowCount={2} />

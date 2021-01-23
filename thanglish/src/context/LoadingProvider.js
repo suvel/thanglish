@@ -1,12 +1,10 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 
 export const LoadingContext = createContext(null);
 
 const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    console.log({ loading });
-  }, [loading]);
+
   return (
     <LoadingContext.Provider
       value={{

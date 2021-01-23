@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { SearchBar, Suggestions, Firebase, StorageContext } from "./components";
+import {Firebase } from "./components";
 import LoadingProvider from "./context/LoadingProvider";
 import WordManager from "./components/WordManager";
 
@@ -19,14 +19,14 @@ function App() {
 
 export default App;
 
-const Thanglish = () => {
-  const [word, setWord] = useState("");
-  const [matchedWord /*setMatchedWord*/] = useState(["hellow", "bye"]);
+// const Thanglish = () => {
+//   const [word, setWord] = useState("");
+//   const [matchedWord /*setMatchedWord*/] = useState(["hellow", "bye"]);
 
-  return (
-    <>
-      <SearchBar searchText={word} onSearchTextChng={setWord} />
-      <Suggestions words={matchedWord} />
-    </>
-  );
-};
+//   return (
+//     <>
+//       <SearchBar searchText={word} onSearchTextChng={setWord} />
+//       <Suggestions words={matchedWord} />
+//     </>
+//   );
+// };
