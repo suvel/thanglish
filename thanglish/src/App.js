@@ -6,7 +6,7 @@ import WordManager from "./components/WordManager";
 
 function App() {
   return (
-    <div className="App">
+    <div className="app center">
       <Firebase>
         <LoadingProvider>
           {/* <Thanglish /> */}

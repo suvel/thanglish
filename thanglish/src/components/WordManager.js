@@ -71,8 +71,9 @@ const WordManager = () => {
 
   return (
     <div>
-      <div>
+      <div className="d-f">
         <input
+          className="w-100"
           type="text"
           value={word}
           onChange={(eve) => setWord(eve.target.value)}
