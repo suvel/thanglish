@@ -1,0 +1,52 @@
+.html-ignr-def {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+.container {
+  background: white;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  border: 0.5rem solid lightpink;
+}
+
+.br-2-rem {
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.w-100p {
+  width: calc(100% - 0.2rem);
+}
+
+.b-c {
+  background: lightpink;
+  border-radius: 10px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.f-wrap {
+  flex-wrap: wrap;
+}
+
+.p-2 {
+  padding: 2rem 0px;
+}
+
+.p-absolute {
+  position: absolute;
+}
+.t-0-5rem {
+  top: 0.5rem;
+}

@@ -1,6 +1,11 @@
 import React, { createContext, useState } from "react";
-
+import "../css/common.css";
+import "../css/loading.css";
 export const LoadingContext = createContext(null);
+
+const LoadingCmp = ({}) => {
+  return <div className="loading-cmp">Loading...</div>;
+};
 
 const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -11,9 +16,7 @@ const LoadingProvider = ({ children }) => {
         setLoading,
       }}
     >
-      <div>
-        <h4>{loading ? "loading..." : ""}</h4>
-      </div>
+      <div className="p-absolute t-0-5rem">{loading ? <LoadingCmp /> : ""}</div>
       {children}
     </LoadingContext.Provider>
   );

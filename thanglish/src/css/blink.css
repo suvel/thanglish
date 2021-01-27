@@ -1,0 +1,23 @@
+.blink  {
+  color: lightpink;
+  animation: blinking 1.5s;
+  animation-iteration-count: 3;
+}
+
+@keyframes blinking {
+  0% {
+    color: transparent;
+  }
+  47% {
+    color: lightpink;
+  }
+  62% {
+    color: transparent;
+  }
+  97% {
+    color: lightpink;
+  }
+  100% {
+    color: transparent;
+  }
+}
