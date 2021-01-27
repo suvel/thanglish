@@ -16,6 +16,7 @@ body {
   box-sizing: border-box;
   text-align: center;
   border: 0.5rem solid lightpink;
+  overflow-y: scroll;
 }
 
 .br-2-rem {
