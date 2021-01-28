@@ -11,14 +11,14 @@ import {
   WordSearcher_n_Add,
   Words,
 } from "./components/ui";
-import DataFlowManager from "./components/DataFlowManager";
+import DataFlowManagerProvider from "./context/DataFlowManagerProvider";
 import dataContent from "./data";
 function App() {
   return (
     <div className="app center">
       <LoadingProvider>
         <WordProvider>
-          <DataFlowManager>
+          <DataFlowManagerProvider>
             <IgnoreBasicHTML>
               <Container>
                 <BrandName>{dataContent.brand.name}</BrandName>
@@ -28,7 +28,7 @@ function App() {
                 <Words />
               </Container>
             </IgnoreBasicHTML>
-          </DataFlowManager>
+          </DataFlowManagerProvider>
         </WordProvider>
       </LoadingProvider>
     </div>
