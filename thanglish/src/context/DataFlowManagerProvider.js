@@ -1,7 +1,11 @@
 import { useContext, useEffect, createContext } from "react";
 import { LoadingContext } from "./LoadingProvider";
 import { WordContext } from "./WordProvider";
-import { fetchCrtSpelling, addToCrtSpelling } from "../collection/crtSpelling";
+import {
+  fetchCrtSpelling,
+  addToCrtSpelling,
+  fetchCrtSpellingGvnWrd,
+} from "../collection/crtSpelling";
 
 export const DataFlowManagerContext = createContext(null);
 
@@ -34,6 +38,23 @@ const addGvnWrdToWords = async (wrd, setLoading, setWords) => {
     });
 };
 
+const fetchWordsGivenWord = async (word, setLoading, setWords) => {
+  let spellings = [];
+  setLoading(true);
+  await fetchCrtSpellingGvnWrd(word)
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        spellings.push({ id: doc.id, ...doc.data() });
+      });
+      setLoading(false);
+    })
+    .catch((err) => {
+      setLoading(false);
+      console.table({ type: "Error", errObj: err });
+    });
+  setWords(spellings);
+};
+
 const DataFlowManagerProvider = ({ children }) => {
   const { wordList, setWordList } = useContext(WordContext);
   const { setLoading } = useContext(LoadingContext);
@@ -46,7 +67,7 @@ const DataFlowManagerProvider = ({ children }) => {
         if (!wrdObj) return;
         const { id, wrd } = wrdObj;
         let clonedWrdList = [...wordList];
-        console.log(wrd)
+        console.log(wrd);
         clonedWrdList.unshift({ id, wrd });
         setWordList(clonedWrdList);
         resolve();
@@ -54,13 +75,19 @@ const DataFlowManagerProvider = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    fetchWords(setLoading, (wrds) => {
+  const searchWord = (word) => {
+    fetchWordsGivenWord(word, setLoading, (wrds) => {
       setWordList(wrds);
     });
-  }, []);
+  };
+
+  // useEffect(() => {
+  //   fetchWords(setLoading, (wrds) => {
+  //     setWordList(wrds);
+  //   });
+  // }, []);
   return (
-    <DataFlowManagerContext.Provider value={{ addWord }}>
+    <DataFlowManagerContext.Provider value={{ addWord, searchWord }}>
       {children}
     </DataFlowManagerContext.Provider>
   );

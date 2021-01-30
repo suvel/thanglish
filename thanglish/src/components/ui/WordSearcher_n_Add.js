@@ -1,11 +1,14 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { DataFlowManagerContext } from "../../context/DataFlowManagerProvider";
 import "../../css/common.css";
 import "../../css/button.css";
 import "../../css/input.css";
 const WordSearcher_n_Add = () => {
   const [searchWord, setSearchWord] = useState("");
-  const { addWord } = useContext(DataFlowManagerContext);
+  let intervalRef = useRef(null);
+  const { addWord, searchWord: getWordMatchingWord } = useContext(
+    DataFlowManagerContext
+  );
   const addBtnRef = useRef(null);
   const handelAddWord = () => {
     if (searchWord === "") {
@@ -22,6 +25,19 @@ const WordSearcher_n_Add = () => {
       addBtnRef.current.click();
     }
   };
+
+  useEffect(() => {
+    clearTimeout(intervalRef);
+    intervalRef = setTimeout(() => {
+      const wrd = searchWord;
+      debugger;
+      getWordMatchingWord(wrd);
+    }, 1000);
+    return () => {
+      clearTimeout(intervalRef);
+    };
+  }, [searchWord]);
+
   return (
     <div>
       <div class="b-c d-flex b-rad">
